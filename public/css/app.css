@@ -1,60 +1,115 @@
-html,
-body {
-  background-color: #fff;
-  color: #636b6f;
-  font-family: sans-serif;
-  font-weight: 300;
-  height: 100vh;
-  margin: 0;
+.list-lorem {
+  font-style: italic;
 }
 
-nav {
-  overflow: hidden;
-  background-color: #333;
+.quote {
+  font-weight: bold;
+  font-size: 20px;
 }
 
-nav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+.scroll {
+  white-space: nowrap !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  -ms-overflow-style: -ms-autohiding-scrollbar !important;
 }
 
-nav a:hover {
-  background-color: #ddd;
-  color: black;
+.label {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+								supported by Chrome and Opera */
 }
 
-nav a:active {
-  background-color: #4CAF50;
-  color: white;
+.wk-style {
+  text-decoration: none !important;
 }
 
-@media screen and (max-width: 600px) {
-  nav a:not(:first-child) {
-    display: none;
+.panel-title {
+  /*font-size: 14px;*/
+}
+
+.panel {
+  /*margin-bottom: 4px;*/
+}
+
+hr {
+  margin-bottom: 13px;
+  margin-top: 13px;
+}
+
+.grid-row-selected {
+  background: #cde6f7 !important;
+}
+
+.tbl-admin {
+  font-size: 12px;
+}
+
+/*
+.pagination {
+	margin-top: -12px;
+}
+
+
+.btn {
+  font-size: 11px;
+}
+
+.table-responsive {
+  font-size: 12px;
+}
+
+.pagination {
+  font-size: 9px;
+}*/
+
+.glyphicon-refresh-animate {
+  -animation: spin .8s infinite linear;
+  -ms-animation: spin .8s infinite linear;
+  -webkit-animation: spinw .8s infinite linear;
+  -moz-animation: spinm .8s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: scale(1) rotate(0deg);
+            transform: scale(1) rotate(0deg);
   }
 
-  nav a.icon {
-    float: right;
-    display: block;
+  to {
+    -webkit-transform: scale(1) rotate(360deg);
+            transform: scale(1) rotate(360deg);
   }
 }
 
-footer {
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
-  text-align: center;
+@keyframes spin {
+  from {
+    -webkit-transform: scale(1) rotate(0deg);
+            transform: scale(1) rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: scale(1) rotate(360deg);
+            transform: scale(1) rotate(360deg);
+  }
 }
 
-.app {
-  padding: 50px;
-  text-align: justify;
+@-webkit-keyframes spinw {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 

@@ -1,18 +1,172 @@
-import React, { Component } from 'react'
-import Nav from './Nav'
-import Footer from './Footer'
+import React from 'react'
+import {
+	Navbar,
+	Nav,
+	NavItem,
+	NavDropdown,
+	MenuItem,
+	Alert
+} from 'react-bootstrap'
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import {
+	HashRouter as Router,
+	Route,
+	Link,
+	Redirect,
+	Switch,
+	withRouter
+} from 'react-router-dom'
+import { IndexLinkContainer } from 'react-router-bootstrap'
 
-class App extends Component {
-	render() {
-		return (
-			<div>
-				<Nav />
-				<div className="app">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos numquam officia illo facilis neque aliquid sequi quasi natus distinctio cupiditate tenetur eos iusto sed dolores, quod libero iure, incidunt reprehenderit delectus! Dolor iste, magnam quia, eos ab commodi ipsam quaerat aspernatur corporis laborum cum voluptatem itaque voluptate. Voluptas sapiente perferendis voluptatum vitae natus accusamus illum sequi aliquam repudiandae optio labore, quod nesciunt, molestias repellat! Nesciunt error culpa voluptatem, cupiditate dolore tenetur, nemo est fugit perferendis ipsum nisi debitis eius reprehenderit. Id assumenda reprehenderit officia aliquam fugit dicta, cumque doloribus nisi nam quas unde quam autem sed tenetur expedita sequi ut vel et! Veniam explicabo voluptate quo sint nobis mollitia ipsa, distinctio possimus quaerat porro, laborum, aliquam. Sunt voluptate distinctio doloremque fuga error, eligendi molestiae ea perspiciatis iusto quam ipsa, cumque modi ab, non blanditiis, animi veritatis tenetur ad dolor nihil inventore magni itaque. Tempora debitis eos veritatis quaerat delectus saepe hic in, natus maiores quae dolor aut iusto eaque amet a dicta at eius sed molestiae pariatur aliquid! Repudiandae, vitae blanditiis cumque illum velit molestias quibusdam deserunt saepe neque consectetur reprehenderit voluptates, et laborum. Ullam iusto ipsum in numquam at pariatur. Sed at voluptatem similique repellat nostrum ex sapiente illo impedit magni incidunt voluptas assumenda quaerat nemo autem vitae ullam ducimus provident unde delectus ipsam reprehenderit quis, repellendus magnam veritatis! Nam, suscipit obcaecati animi debitis explicabo harum at autem! Et enim id distinctio, accusamus necessitatibus modi blanditiis in nisi similique, iste deserunt quia eaque soluta ut maiores quae dolorum. Exercitationem nam labore numquam repudiandae quibusdam, sed iusto? Architecto incidunt praesentium iure, soluta ipsum provident tempora veritatis vero minus harum laboriosam iste quasi adipisci quisquam! Soluta, architecto laudantium illum vero eius possimus amet provident repudiandae, saepe aliquam asperiores ut fuga ipsa nulla! Et soluta nobis odit beatae voluptatibus quis, dignissimos repellat commodi. Adipisci cupiditate nemo ducimus ab ratione obcaecati, esse. Consequuntur ex provident eveniet et temporibus voluptas! Temporibus sit alias officiis a, velit exercitationem doloribus dolore modi ad optio quae quasi adipisci, iure consequuntur debitis veniam laboriosam incidunt non ut eum harum. Consequatur porro, error explicabo. Quae eligendi, similique perferendis possimus ut soluta dolores suscipit vel placeat vero et aspernatur voluptate eaque labore voluptas, cum molestias odit id sit ad quam sequi aliquid enim! Hic, odio cum. Repellat quis consectetur deleniti similique fuga itaque vel quos iure inventore eaque at odit laborum vero saepe beatae quo quidem excepturi dolorem, voluptate expedita aliquam explicabo sequi! Animi tenetur atque nulla molestias suscipit quisquam mollitia perspiciatis molestiae labore eveniet obcaecati sunt et, ex, ullam optio cum odit facere cumque rem dolores. Officiis sequi velit, cum ipsa accusantium natus delectus tempore consequatur. Praesentium facilis quas, velit quae corrupti dolores molestias ex, repellendus! Voluptates sapiente a, repudiandae, ipsa molestias inventore harum hic laboriosam alias numquam, tempore dolor dignissimos excepturi mollitia! Dicta fugiat magnam consequuntur aperiam accusamus vero ullam facilis eveniet non autem cumque esse ea, enim nemo mollitia sunt impedit neque eum, iure. Minus cum architecto, veritatis quisquam, voluptate consequatur porro animi consequuntur. Quis laboriosam consequuntur magnam! Quisquam minus voluptas quibusdam at earum odit molestias officiis facere rem blanditiis, laboriosam quidem consectetur praesentium neque quaerat suscipit esse dolores iste nobis quae enim distinctio. Architecto quidem maxime deleniti voluptatum, numquam facere eius reprehenderit voluptas enim quia asperiores non laboriosam nostrum ullam rerum. Temporibus non omnis quod laudantium, nam soluta quia velit. Amet debitis, vero sapiente, placeat nisi eaque laudantium totam nemo animi minima dicta odit, laborum numquam! Consequatur nostrum recusandae consectetur ratione laborum beatae cumque est, sit, laboriosam eaque at quos aperiam aliquam architecto earum tempore omnis fuga quo nemo. Aliquid repudiandae accusamus, ut totam nulla illo officiis id nam tenetur! Natus reprehenderit eligendi, rerum at mollitia odio impedit recusandae modi delectus ex dignissimos laborum vel voluptatem unde tempora ab consectetur iusto, aliquid autem, possimus. Voluptatem dolorum dolor odio omnis, expedita alias, repudiandae, harum architecto nostrum impedit tenetur deleniti! Dicta harum magnam aperiam sequi voluptatem, fugiat nihil explicabo, maiores accusamus aliquam obcaecati rem ab officia quod amet iste neque, quam reprehenderit? Deserunt maxime ad temporibus quam, adipisci necessitatibus beatae assumenda labore recusandae itaque minima eligendi, quas, veniam. Saepe maiores quam sunt perspiciatis officiis vero velit, unde rem. Sit veritatis, facilis placeat laborum. Dolorum rem vel natus possimus eum nostrum fugit, voluptatibus eos. Ipsum voluptate eum, quam beatae hic vero at rem incidunt facilis esse quae, ullam, odit nostrum temporibus corporis voluptatem iusto harum expedita fugit, quia molestiae quo consequatur cumque eligendi! Quis culpa minima, quo, reiciendis illum asperiores iusto inventore error laborum qui consequuntur. Molestiae dolorem expedita blanditiis aspernatur recusandae culpa illum, pariatur nisi consequuntur rerum odio sapiente molestias temporibus, alias officiis facere laudantium et veniam velit, iste! Beatae delectus molestiae error fugit sint expedita eveniet modi facere dolorem totam, similique temporibus sed voluptates sit dolore dolor soluta iure repellat nobis nesciunt corporis eaque magni blanditiis. Hic nisi voluptates quos reprehenderit facere molestiae recusandae accusamus illum modi earum quasi commodi magnam, ea quaerat repellendus officiis in. Ipsa impedit quidem, eum omnis molestias, at repellendus, dolor aliquam possimus ratione officiis, ut. Id porro, odio laborum rem modi, sapiente sint hic soluta reiciendis voluptas impedit animi blanditiis. In recusandae, a provident, illo enim harum quae deleniti cumque fuga laudantium. Ipsa quidem adipisci neque delectus sunt. Recusandae esse vitae voluptates nulla velit officiis delectus temporibus voluptatem quos, sequi et libero porro itaque beatae magnam nemo rem inventore accusamus quod minima. Quasi magnam deserunt eius, dicta dolore veritatis debitis quam pariatur.</div>
-				<Footer />
-			</div>
-		)
-	}
+import Login from './Login'
+import Registration from './Registration'
+import Home from './Home'
+import Pick from './Pick'
+import Admin from './Admin'
+
+import {
+	verifyToken, 
+	generateToken
+} from './../helper/auth'
+
+const checkAuth = () => {
+	return verifyToken(localStorage.getItem('jwt-auth'))
 }
 
-export default App;
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    checkAuth() ? (
+ 		<Component {...props}/>    	
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
+const AdminRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    checkAuth() ? (
+    	checkAuth().agent.is_admin ? (
+ 			<Component {...props}/>    	
+ 		) : (
+	 		<Redirect to={{
+	        pathname: '/home',
+	        state: { from: props.location }
+	      }}/>
+ 		)
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
+const NoMatch = ({ location }) => (
+	<div className="container">
+		<Alert bsStyle='warning'>
+			Sorry, the page you are looking for could not be found.
+		</Alert>
+	</div>
+)
+
+const logout = cb => {
+	localStorage.removeItem('jwt-auth')
+	setTimeout(cb, 100)
+}
+
+const AuthLink = withRouter(({ history }) => (
+  checkAuth() ? (
+  	<Nav pullRight>
+		<NavDropdown 
+			title={(
+				<span>
+					<span className="glyphicon glyphicon-user"></span>&nbsp;&nbsp;
+		 			{checkAuth().agent.name}
+				</span>
+			 )} 
+			id="basic-nav-dropdown"
+		>
+			{
+				checkAuth().agent.is_admin ? (
+					<MenuItem
+						onClick={() => history.push('/admin')}
+					>Admin
+					</MenuItem>
+				) : (null)
+			}
+			<MenuItem
+				onClick={() => {logout(() => history.push('/'))}}
+			>Logout
+			</MenuItem>
+		</NavDropdown>
+	</Nav>
+  ) : history.location.pathname === '/login' 
+  	|| history.location.pathname === '/' ? (
+		<Nav pullRight>
+			<NavItem 
+				onClick={() => history.push('/register')}
+			>Sign Up</NavItem>
+		</Nav>
+  ) : (
+    	<Nav pullRight>
+			<NavItem 
+				onClick={() => history.push('/login')}
+			>Sign In</NavItem>
+		</Nav>
+  	)
+))
+
+const App = () => {
+	return (
+		<Router>
+			<div>
+				<Navbar collapseOnSelect>
+					<Navbar.Header>
+						<Navbar.Brand>
+							<a href="/"><img src="./maple_logo_home_page.png" alt="Logo"/></a>
+						</Navbar.Brand>
+						<Navbar.Toggle />
+					</Navbar.Header>
+					<Navbar.Collapse>
+						{/*<Nav>
+							<IndexLinkContainer to="/home">
+								<NavItem>Home</NavItem>
+							</IndexLinkContainer>
+							<IndexLinkContainer to="/login">
+								<NavItem>Login</NavItem>
+							</IndexLinkContainer>
+							<IndexLinkContainer to="/register">
+								<NavItem>Register</NavItem>
+							</IndexLinkContainer>
+							<IndexLinkContainer to="/pick">
+								<NavItem>Pick</NavItem>
+							</IndexLinkContainer>
+							<IndexLinkContainer to="/no-pick">
+								<NavItem>No Route</NavItem>
+							</IndexLinkContainer>
+						</Nav>*/}
+						<AuthLink />
+					</Navbar.Collapse>
+				</Navbar>
+
+				<Switch>
+					<Route exact path="/" component={Login} />
+					<Route exact path="/register" component={Registration} />
+					<Route exact path="/login" component={Login} />
+					<PrivateRoute path="/home" component={Home} />
+					<PrivateRoute path="/pick" component={Pick} />
+					<AdminRoute path="/admin" component={Admin} />
+					<Route component={NoMatch} />
+				</Switch>
+			</div>
+		</Router>
+	)
+}
+
+export default App

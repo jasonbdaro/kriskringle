@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "axios": "^0.16.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-react": "^6.23.0",
     "browser-sync": "^2.18.13",
     "browser-sync-webpack-plugin": "^1.2.0",
@@ -19,5 +20,19 @@
     "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "dependencies": {
+    "draft-js": "^0.10.4",
+    "draft-js-linkify-plugin": "^2.0.0-rc8",
+    "draft-js-plugins-editor": "^2.0.0-rc8",
+    "react-bootstrap": "^0.31.3",
+    "react-bootstrap-validation": "^0.1.11",
+    "react-router-bootstrap": "^0.24.3",
+    "react-router-dom": "^4.2.2",
+    "react-rte": "^0.15.0",
+    "react-splitter-layout": "^0.2.1",
+    "react-transition-group": "^2.2.0",
+    "react-validation": "^2.10.9",
+    "socket.io": "^2.0.4"
   }
 }
