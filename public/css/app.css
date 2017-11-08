@@ -1,0 +1,60 @@
+html,
+body {
+  background-color: #fff;
+  color: #636b6f;
+  font-family: sans-serif;
+  font-weight: 300;
+  height: 100vh;
+  margin: 0;
+}
+
+nav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+nav a:active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  nav a:not(:first-child) {
+    display: none;
+  }
+
+  nav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+footer {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+
+.app {
+  padding: 50px;
+  text-align: justify;
+}
+
