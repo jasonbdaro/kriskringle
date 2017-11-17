@@ -62,7 +62,8 @@ class Home extends React.Component {
 			_dirty_post_text: false,
 			_post_updated: false,
 			editorState: EditorState.createEmpty(),
-			_post_text: ''
+			_post_text: '',
+			view: []
 		}
 	}
 
@@ -93,7 +94,7 @@ class Home extends React.Component {
 				_key: data._key,
 				_post_text: _post_text ? _post_text.description : '',
 				current_round_desc: current_round ? current_round.description : ''
-			})
+			}, () => this.setState({view: this.state.users}))
 		})
 	}
 
@@ -132,7 +133,9 @@ class Home extends React.Component {
 
 		axios.get('home-get', {params})
 		.then(response => {
-			this.setState({users: response.data})
+			this.setState({users: response.data}, () => this.setState({
+				view: this.state.users
+			}))
 		})
 		.catch(error => {
 			if (error.response) {
@@ -193,20 +196,42 @@ class Home extends React.Component {
 				</Nav>
 				{
 					current_round_desc && 
-					<Well style={{marginTop: '10px', marginBottom: '-10px'}}>{current_round_desc}</Well>
+					<Well style={{marginTop: '10px', marginBottom: '-10px', backgroundColor: '#fd4040', color: '#fff'}}>{current_round_desc}</Well>
 				}
 			</div>
+	}
+
+	_handleIndividualList(id) {
+		const view = this.state.users.filter(d => d.user_id === id)
+		this.setState({view})
 	}
 
 	renderUsers() {
 		const {users} = this.state
 		return users.length > 0 ? (
 			<div>			
-				<p style={{fontWeight: 'bold'}}>Users Participated</p>
+				<p style={{fontWeight: 'bold'}}>
+					Users Participated
+
+					<Button 
+						style={{marginRight: '16px'}} 
+						className="pull-right" 
+						bsStyle="primary" 
+						bsSize="xsmall"
+						onClick={() => this.setState({view: this.state.users})}
+						title={'View all wish lists'}
+					>View All Wish Lists
+					</Button>
+				</p>
 				<ListGroup>
 				{
 					users.map((item, index) =>
-						<ListGroupItem key={item.user_id}>
+						<ListGroupItem 
+							key={item.user_id}
+							onClick={this._handleIndividualList.bind(this, item.user_id)}
+							title={`Click to view ${item.user_name}'s wish list`}
+							bsStyle="warning"
+						>
 						{
 							item.user_id == session().agent.id ?
 							<b>{item.user_name}</b> :
@@ -232,8 +257,11 @@ class Home extends React.Component {
 
 
 	renderLists() {
-		const {users} = this.state
-		const lists = users.filter(d => d.description)
+		/*const {users} = this.state
+		const lists = users.filter(d => d.description)*/
+
+		const {view} = this.state
+		const lists = view.filter(d => d.description)
 
 		lists.sort((a, b) => new Date(b.updated) - new Date(a.updated))
 
@@ -242,7 +270,7 @@ class Home extends React.Component {
 			{
 				lists.map((item, index) => 
 					<Col md={12} key={item.user_id}>
-						<Panel bsSize="small" 
+						<Panel bsSize="small" bsStyle="primary"
 							header={(
 								<p style={{fontSize: '14px'}}>
 									<b>{item.user_name}</b>
@@ -251,7 +279,7 @@ class Home extends React.Component {
 										(item.current_round && item.current_season) ? null : (
 											<span>
 												&nbsp;&nbsp;
-												<Label bsStyle="danger">Secret Santa: {item.user_picked_by}</Label>
+												<Label bsStyle="success">Secret Santa: {item.user_picked_by}</Label>
 											</span>
 										)
 									}
@@ -266,29 +294,31 @@ class Home extends React.Component {
 			</div>
 		) : (
 			<Col md={12}>
-				<Well className="text-center">Others have not posted yet.</Well>
+				<Well className="text-center">No results found.</Well>
 			</Col>
 		)
 	}
 
 	_handlePickSuccessCallback(cb) {
 		this.setState({_pick_status: 'success'})
-		setTimeout(cb, 500)
+		setTimeout(cb, 500) //500
 	}
 
 	_handlePickYesClick() {
 		this.setState({_pick_prompt: false, _pick_loader: true, _pick_status: 'processing'})
-		axios.post('pick', {id: session().agent.id})
-		.then(response => {
-			this._handlePickSuccessCallback(
-				() => this.setState({users: response.data._data, _key: response.data._key})
-			)
-		})
-		.catch(error => {
-			if (error.response) {
-				this.setState({_pick_status: 'error'})
-			}
-		})
+		setTimeout(() => {			
+			axios.post('pick', {id: session().agent.id})
+			.then(response => {
+				this._handlePickSuccessCallback(
+					() => this.setState({users: response.data._data, _key: response.data._key})
+				)
+			})
+			.catch(error => {
+				if (error.response) {
+					this.setState({_pick_status: 'error'})
+				}
+			})
+		}, (Math.floor(Math.random() * (7 - 4 + 1) + 4)) * 1000)
 	}
 
 	renderPickLoader() {
@@ -358,7 +388,7 @@ class Home extends React.Component {
 			{
 				_pick_loader ? (this.renderPickLoader()) : (
 					<div>
-						{'Who will you buy a gift?'}
+						{'Who will you buy a gift? (Manito/Manita)'}
 						<Button 
 							style={{width: '61px'}} 
 							className="pull-right" 
@@ -391,7 +421,7 @@ class Home extends React.Component {
 
 				this.state.secret === '' ? (
 					<div>
-						You will buy a gift to...
+						<strong>Your Manito / Manita is...</strong>
 						<Button 
 							style={{width: '61px'}} 
 							className="pull-right" 
@@ -403,7 +433,7 @@ class Home extends React.Component {
 					</div>
 				) : (
 					<div>
-						{this.state.secret}
+						<strong>{this.state.secret}</strong>
 						<Button 
 							style={{width: '61px'}} 
 							className="pull-right" 
@@ -455,7 +485,7 @@ class Home extends React.Component {
 					users: response.data, 
 					_post_updated: false,
 					_dirty_post_text: false
-				})
+				}, () => this.setState({view: this.state.users}))
 			})
 			.catch(error => {
 				if (error.response) {
@@ -508,7 +538,7 @@ class Home extends React.Component {
 			{
 				user.description && !_post_updated ? (
 					<Panel>
-						{'Your wish is already posted'}
+						<b>Your wish list is already posted</b>
 						<Button 
 							style={{width: '61px'}} 
 							className="pull-right" 
@@ -532,6 +562,7 @@ class Home extends React.Component {
 				        onClick={() => this.refs.editor.focus()}
 				      >
 				        <Editor
+				          placeholder="Enter your wish list here..."
 				          editorState={this.state.editorState}
 				          onChange={this._handleEditorChange.bind(this)}
 				          plugins={[linkifyPlugin]}

@@ -89,28 +89,35 @@ class UserController extends Controller
 	public function create(Request $request)
 	{
 		// $params = $this->_filterParams($request->all());
+		try {			
+			// comment here for registration of administrator
+			/*$season = Season::where('current', 1)->firstOrFail(['lock']);
+			if ($season->lock) {
+				return response()->json(
+					array('error' => array('messages' => 'Unable to register.'))
+				)->setStatusCode(499, 'Registration Failure');
+			}*/
+			// comment here for registration of administrator
 
-		$season = Season::where('current', 1)->first(['lock']);
+			$valid = $this->_table->isValid($request->all());
 
-		if ($season->lock) {
+			if ($valid !== true) {
+				return response()->json($valid)
+					->setStatusCode(500, 'Invalid Inputs');
+			}
+
+			$user = $this->_table::create([
+				'name' => $request->input('name'),
+				'username' => $request->input('username'),
+				'password' => bcrypt($request->input('password')),
+			]);
+			return response()->json($user, 200);
+		} catch (\Exception $e) {
 			return response()->json(
 				array('error' => array('messages' => 'Unable to register.'))
 			)->setStatusCode(499, 'Registration Failure');
 		}
-
-		$valid = $this->_table->isValid($request->all());
-
-		if ($valid !== true) {
-			return response()->json($valid)
-				->setStatusCode(500, 'Invalid Inputs');
-		}
-
-		$user = $this->_table::create([
-			'name' => $request->input('name'),
-			'username' => $request->input('username'),
-			'password' => bcrypt($request->input('password')),
-		]);
-		return response()->json($user, 200);
+		
 	}
 
 	public function login(Request $request)

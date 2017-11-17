@@ -278,7 +278,7 @@ class Admin extends React.Component {
 		const {submitted, name, current, lock} = this.state.form
 		return (
 			<div>
-				<h4>{name ? name : 'Lorem'}</h4>
+				<h4>{name ? name : 'New Year-End'}</h4>
 				{this.renderMessage()}
 				<form onSubmit={this._handleFormSubmit.bind(this)}>
 					<FormGroup 
@@ -735,7 +735,7 @@ class Admin extends React.Component {
 			<div className="container">
 				<Row>
 					<Col md={4}>
-						<h4>Lorem</h4>
+						<h4>Year-End</h4>
 						<Table bordered condensed hover responsive className="tbl-admin">
 							<thead style={{background: '#337ab7', color: '#fff'}}>
 								<tr>
@@ -757,7 +757,7 @@ class Admin extends React.Component {
 							{
 								this.state.form.name && 
 								<Col md={12} style={{marginTop: '20px'}}>
-									<h4>Lorem</h4>
+									<h4>Weeks (Rounds)</h4>
 									{this.renderRoundMessages()}
 									<Table bordered condensed hover responsive className="tbl-admin">
 										{this.renderRoundToolbar()}
